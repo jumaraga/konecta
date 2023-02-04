@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  konecta-db:
+    container_name: Konecta-db
+    image: postgres:latest
+    ports:
+      - "5442:5432"
+    volumes:
+    - ~/data/konecta-db/postgresql/data:/var/lib/postgresql/database
+    environment:
+      - POSTGRES_USER=pillars_admin
+      - POSTGRES_PASSWORD=password
+      - PGDATA=/var/lib/postgresql/data
+      - POSTGRE_DB=konecta-db
+    networks:
+      - konecta-network
+
+networks:
+  konecta-network:
+    driver: bridge

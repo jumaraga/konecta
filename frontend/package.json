@@ -1,0 +1,18 @@
+{
+  "name": "connectaassestment",
+  "version": "1.0.0",
+  "description": "This a ecommers part of a technical interview for Canecta. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "react.js",
+    "tailwindcss",
+    "postgresSql",
+    "and",
+    "Nest.js"
+  ],
+  "author": "josue ricardo ramirez zuares",
+  "license": "ISC"
+}
