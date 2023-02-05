@@ -1,12 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { DataSource } from 'typeorm';
 import { AppModule } from './app.module';
-import configuration from './config/configuration';
 import { AppDataSource } from './config/datasource.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  app.enableCors({
+  origin: [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+  ],
+  methods: ["GET", "POST"],
+  credentials: true,
+});
+  await app.listen(3001);
   
 }
 bootstrap();
