@@ -18,14 +18,14 @@ export class CoursesService {
         return await this.coursesRepo.query(`INSERT INTO "courses"("name", "description", "img_url", "createdAt", "updatedAt", "author") VALUES ('${bookInfo.name}', '${bookInfo.description}', '${bookInfo.img_url}', DEFAULT, DEFAULT, ${bookInfo.author})`);
     }
     async getCourses() {
-
+        return await this.coursesRepo.query(/* sql */`SELECT * from courses`)
     }
 
-    async updateCourse() {
-
+    async updateCourse(id: number, info: newCourseInfo) {
+        await this.coursesRepo.update(id, info);
     }
 
-    async removeCourse() {
-
+    async removeCourse(id: number) {
+        await this.coursesRepo.delete(id);
     }
 }
