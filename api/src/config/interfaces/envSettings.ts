@@ -9,17 +9,21 @@ export interface PgConfig {
 }
 export interface EnvSettings {
     isDev: boolean;
-    isProd:boolean;
+    isProd: boolean;
     pgConfig: PgConfig;
     appOrigin: string;
     prodOrigin: string;
     api: string;
     env: string;
-    multerConfig:MulterConfig
+    multerConfig: MulterConfig
+    jwt:Jwt
 }
 
-export interface MulterConfig{
+export interface MulterConfig {
     dest: string;
-    maxSize:string ;
+    maxSize: string;
 }
-
+export interface Jwt {
+    expireTime:string;
+    secret:string;
+}

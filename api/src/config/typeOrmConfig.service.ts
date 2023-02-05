@@ -4,23 +4,23 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { EnvSettings, PgConfig } from "./interfaces";
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
-  
+
   constructor(
     private readonly configService: ConfigService<EnvSettings>,
-    ) { }
-    
-    createTypeOrmOptions(): TypeOrmModuleOptions {
-      const pgConfig = this.configService.get<PgConfig>('pgConfig');
-      return {
-        type: 'postgres',
-        host: pgConfig.host,
-        port: pgConfig.port,
-        username: pgConfig.username,
-        password: pgConfig.password,
-        database: pgConfig.database,
-        entities: ['dist/**/*.model.js'],
-        synchronize: false,
-        toRetry: this.onRetryError,
+  ) { }
+
+  createTypeOrmOptions(): TypeOrmModuleOptions {
+    const pgConfig = this.configService.get<PgConfig>('pgConfig');
+    return {
+      type: 'postgres',
+      host: pgConfig.host,
+      port: pgConfig.port,
+      username: pgConfig.username,
+      password: pgConfig.password,
+      database: pgConfig.database,
+      entities: ['dist/**/*.model.js'],
+      synchronize: false,
+      toRetry: this.onRetryError,
       logging: this.configService.get('isDev'),
     };
   }

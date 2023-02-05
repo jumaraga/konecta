@@ -6,13 +6,16 @@ import { INewUserInfo } from '../user/interfaces/user.interface';
 import { Auth } from './models/auth.model';
 import { UserService } from '../user/user.service';
 import { User } from 'src/user/user.model';
+import { JwtService } from "@nestjs/jwt";
+import { PayloadToken } from './interfaces/jwt.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     @InjectRepository(Auth)
-    private readonly authRepo: Repository<Auth>) { }
+    private readonly authRepo: Repository<Auth>,
+    private readonly jwtService: JwtService) { }
   async createUser(userInfo: INewUserInfo): Promise<User | string> {
 
 
@@ -28,8 +31,8 @@ export class AuthService {
 
   async login(password: string, email: string) {
     const user = await this.userService.findUserByEmail(email);
-    const match = await this.verifyPassword(password,user.hash)
-    if(user && match) return user;
+    const match = await this.verifyPassword(password, user.hash)
+    if (user && match) return user;
     return null
   }
 
@@ -51,5 +54,11 @@ export class AuthService {
     }
   }
 
-
+  async generateJWT(user: User){
+    const paylod:PayloadToken ={admin:user.isAdmin, sub:+user.id}
+    return {
+      acces_token:await this.jwtService.signAsync(paylod),
+      user
+    }
+  }
 }
