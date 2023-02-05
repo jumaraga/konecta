@@ -72,4 +72,5 @@ export class CoursesController {
             res.send({ message, e })
         }
     }
+
 }
