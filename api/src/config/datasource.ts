@@ -1,8 +1,6 @@
 import { DataSource } from "typeorm";
 import { config } from 'dotenv';
-import { ConfigService } from '@nestjs/config';
-import { PgConfig } from "./interfaces";
-import configuration from "./configuration";
+
 config()
 // this configuration it's neccesary to generate migrations
 export const AppDataSource = new DataSource({
@@ -16,5 +14,5 @@ export const AppDataSource = new DataSource({
     synchronize: false,
     logging: true,
     subscribers: [],
-    migrations: [],
+    migrations: ['**/migrations/*.ts'],
 })

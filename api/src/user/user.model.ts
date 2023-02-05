@@ -9,21 +9,23 @@ export class User {
   //@Field()
   @Column({ unique: true })
   email: string;
+  @Column({ unique: true })
+  username: string;
 
   //@Field()
   @Column()
-  firstName?: string;
+  firstname?: string;
 
   //@Field()
   @Column()
-  lastName?: string;
+  lastname?: string;
 
   //@Field()
-  
+
   @Column({ unique: true })
   phoneNumber?: string;
 
   @Column()
   isAdmin?: boolean;
-  
+
 }
