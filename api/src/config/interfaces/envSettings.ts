@@ -15,5 +15,11 @@ export interface EnvSettings {
     prodOrigin: string;
     api: string;
     env: string;
+    multerConfig:MulterConfig
+}
+
+export interface MulterConfig{
+    dest: string;
+    maxSize:string ;
 }
 

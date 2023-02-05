@@ -17,6 +17,10 @@ export default (): EnvSettings => {
             username: env.PG_USERNAME,
             password: env.PG_PASSWORD,
             database: env.PG_DATABASE,
+        },
+        multerConfig:{
+            maxSize:process.env.MAX_FILE_SIZE,
+            dest:process.env.UPLOAD_LOCATION
         }
     }
 };

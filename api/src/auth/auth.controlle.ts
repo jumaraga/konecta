@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
 import { Response } from "express";
-import { userInfo } from "os";
 import { AuthService } from "./auth.service";
 import { INewUserInfo } from "../user/interfaces/user.interface";
 import { UserService } from "src/user/user.service";
