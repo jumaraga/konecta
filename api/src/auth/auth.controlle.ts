@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
-import { Response } from "express";
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Response,Request } from "express";
 import { AuthService } from "./auth.service";
 import { INewUserInfo } from "../user/interfaces/user.interface";
 import { UserService } from "src/user/user.service";
+import { AuthGuard } from "@nestjs/passport/dist/auth.guard";
 @Controller('auth')
 export class AuthController {
 
@@ -20,8 +21,14 @@ export class AuthController {
             res.send({ message, e })
         }
     }
-    @Post('/')
-    async signIp(@Body() userInfo: INewUserInfo, @Res() res: Response) {
+
+    @UseGuards(AuthGuard('local'))
+    @Post('/login')
+    async signIn(@Req() req:Request, @Body() email: string, @Body() password: string, @Res() res: Response) {
+
+        return res.send(req.user)
+        console.log('as')
+
     }
 
     @Post('signout')

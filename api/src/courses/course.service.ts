@@ -10,12 +10,13 @@ export class CoursesService {
     constructor(
         private readonly userSrevice: UserService,
         @InjectRepository(Course)
-        private readonly authRepo: Repository<Course>) { }
+        private readonly coursesRepo: Repository<Course>) { }
 
-    async addNewBook(bookInfo: unknown): Promise<Course> {
-        return
+    async addNewCourse(bookInfo: unknown): Promise<Course> {
+        const newCourse = this.coursesRepo.create();
+        return await this.coursesRepo.save(newCourse);
     }
-    async getBooks() {
+    async getCourses() {
 
     }
     

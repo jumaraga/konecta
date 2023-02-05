@@ -11,8 +11,6 @@ export class UserService {
     }
     async validadUSernameAndEmail(username: string, email: string): Promise<string> {
         const found = (await this.UserRepository.query(/* sql */`Select * from users Where "email" = '${email}' Or "username" ='${username}'`))[0] as User
-
-        
         if (found?.email === email) return `an account with this email alredy exist`
         if (found?.username === username) return `username already exist`
 
@@ -21,6 +19,9 @@ export class UserService {
 
     async saveNewUser(userInfo: Omit<User, 'id'>): Promise<User> {
         return await this.UserRepository.save(userInfo)
+    }
+    async findUserByEmail(email:string){
+        return (await this.UserRepository.query(/* sql */`Select us.*, au.hash from users us join auth au on us.id = au.user_id Where email='${email}' `))[0]
     }
 
 }

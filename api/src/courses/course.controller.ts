@@ -21,7 +21,7 @@ export class CoursesController {
         @Body() courseInfo: newCourseInfo,
         @UploadedFile() file: Express.Multer.File, @Res() res: Response) {
         try {
-            
+            this.BookService.addNewCourse(courseInfo)
             return res.send({ message: '' })
         } catch (e) {
             const message = 'Something wrong happened. Please contact help@konecta.com for assistance.';
