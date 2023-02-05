@@ -1,7 +1,7 @@
+import { registerAs } from '@nestjs/config';
 import { EnvSettings } from './interfaces';
 
-export default (): EnvSettings => {
-    console.log(process.env.PG_PORT)
+export default registerAs('config',() => {
     const env = process.env;
     const isProd = env.APP_ENV === 'PROD' || env.APP_ENV === 'PRD';
     const isDev = env.APP_ENV === 'DEV';
@@ -18,9 +18,13 @@ export default (): EnvSettings => {
             password: env.PG_PASSWORD,
             database: env.PG_DATABASE,
         },
-        multerConfig:{
-            maxSize:process.env.MAX_FILE_SIZE,
-            dest:process.env.UPLOAD_LOCATION
+        multerConfig: {
+            maxSize: process.env.MAX_FILE_SIZE,
+            dest: process.env.UPLOAD_LOCATION
+        },
+        jwt: {
+            expireTime: process.env.JWT_EXPIRE,
+            secret: process.env.JWT_SECRET,
         }
     }
-};
+});
