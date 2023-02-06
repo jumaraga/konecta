@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -25,9 +26,12 @@ import { CoursesModule } from './courses/course.module';
         type: 'postgres',
         entities: ['dist/**/*.model.js'],
         synchronize: false,
-        
+
       }
     }
+  }), ThrottlerModule.forRoot({
+    ttl: 60,
+    limit: 10,
   }), AuthModule, CoursesModule],
   controllers: [AppController,],
   providers: [AppService],
