@@ -5,7 +5,7 @@ export const SignInInput: FunctionComponent<Input> = ({name,label ,cssClasses,ty
     return (
         <div>
             <h5>{label}</h5>
-            <input className={` border-slate-500 border rounded ${cssClasses}`} name={name} type={type} />
+            <input className={`w-full border-slate-500 border rounded ${cssClasses}`} name={name} type={type} />
         </div>
 
     )
