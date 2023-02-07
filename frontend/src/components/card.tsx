@@ -1,6 +1,6 @@
 import React from "react";
 
-const CourseCard=({name,author,description,img_url}:{name:string,author:string,description:string,img_url:string})=>{
+export const CourseCard=({name,author,description,img_url}:{name:string,author?:string,description:string,img_url:string})=>{
     return (
         <div className="bg-orange-300 rounded-xl ">
             <img src={img_url} alt="" />
