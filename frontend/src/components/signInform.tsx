@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "./Button";
-import { SignInInput } from "./formInput";
+import { SignInInput } from "./FormInput";
 
 export const SignInForm = () => {
     return (
