@@ -12,9 +12,9 @@ export const multerConfig = {
 // Multer upload options
 export const multerOptions = {
     // Enable file size limits
-    limits: {
-        fileSize: +process.env.MAX_FILE_SIZE,
-    },
+    // limits: {
+    //     fileSize: +process.env.MAX_FILE_SIZE,
+    // },
     // Check the mimetypes to allow for upload
     fileFilter: (req: any, file: any, cb: any) => {
         if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
@@ -33,9 +33,9 @@ export const multerOptions = {
             const uploadPath = process.env.UPLOAD_LOCATION;
             // Create folder if doesn't exist
             if (!existsSync(uploadPath)) {
-                mkdirSync(join(__dirname,'..',uploadPath),{mode:2,'recursive':true});
+                mkdirSync(join(process.cwd(),uploadPath),{mode:2,'recursive':true});
             }
-            cb(null, join(__dirname,'..',uploadPath) );
+            cb(null,join(process.cwd(),uploadPath) );
         },
         // File modification details
         filename: (req: any, file: any, cb: any) => {

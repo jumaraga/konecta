@@ -1,7 +1,7 @@
 
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn,OneToOne } from "typeorm";
 import { User } from "src/user/user.model";
-
+import { Image } from "src/images/models/img.model";
 @Entity({ name: 'courses' })
 export class Course {
     @PrimaryGeneratedColumn()
@@ -17,7 +17,9 @@ export class Course {
     @Column('text')
     description: string;
 
-    @Column('text')
+
+    @OneToOne((type) => Image, (Image)=>Image.url)
+    @JoinColumn({ name: 'img_url' })
     img_url: string;
 
     @Column()

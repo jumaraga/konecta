@@ -9,14 +9,23 @@ import { multerOptions } from "src/config/multerConfig";
 import { AuthGuard } from "@nestjs/passport";
 import AdminGuard from "src/auth/guards/admin.guard";
 import { PayloadToken } from "src/auth/interfaces/jwt.interface";
+import configuration from "src/config/configuration";
+import { ImgService } from "src/images/img.service";
+import { join } from "path";
+import { ConfigService, ConfigType } from "@nestjs/config";
 @Controller('courses')
 export class CoursesController {
-    constructor(private readonly BookService: CoursesService, private readonly userService: UserService) { }
+    constructor(
+        private readonly BookService: CoursesService,
+        private readonly userService: UserService,
+        private readonly imgService :ImgService,
+        private  confiService :ConfigService
+    ) { }
     @Get('/')
     async listCourses(
         @Res() res: Response,) {
         try {
-            const courses =await this.BookService.getCourses()
+            const courses = await this.BookService.getCourses()
             return res.send({ message: '', data: courses })
         } catch (e) {
             const message = 'Something wrong happened. Please contact help@konecta.com for assistance.';
@@ -34,7 +43,9 @@ export class CoursesController {
         @Res() res: Response) {
         try {
             const { sub } = req.user as PayloadToken
-            const newCourse = await this.BookService.addNewCourse({ ...courseInfo, img_url: file.path, author: sub })
+            const img_url =`${this.confiService.get('config.appOrigin')}/images/${file.filename}`
+            const uploadedImage = await  this.imgService.saveImg(img_url,sub,'course')
+            const newCourse = await this.BookService.addNewCourse({ ...courseInfo, img_url, author: sub })
             return res.send({ message: 'new course create successfuly', data: newCourse })
         } catch (e) {
             const message = 'Something wrong happened. Please contact help@konecta.com for assistance.';
