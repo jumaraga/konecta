@@ -20,7 +20,7 @@ export default registerAs('config',() => {
         },
         multerConfig: {
             maxSize: process.env.MAX_FILE_SIZE,
-            dest: process.env.UPLOAD_LOCATION
+            dest: process.env.UPLOAD_LOCATION,
         },
         jwt: {
             expireTime: process.env.JWT_EXPIRE,
