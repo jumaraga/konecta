@@ -6,12 +6,17 @@ import { useEffect, useState } from "react";
 
 export const useCourses = () => {
     const [courses, setCourses] = useState<ICourse[]>([]);
+    const controller = new AbortController();
     const fetchCourses = async () => {
-        const data = await ClientAxios.get(coursesRoutes.listCourses)
+        const data = await ClientAxios.get(coursesRoutes.listCourses, { signal: controller.signal })
         setCourses(data.data.data)
     }
-    useEffect(()=>{
-        fetchCourses()
-    })
+    useEffect(() => {
+        fetchCourses();
+
+        return () => {
+            controller.abort()
+        }
+    }, [])
     return courses
 }
