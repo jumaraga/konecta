@@ -17,7 +17,8 @@ const ClientAxios = axios.create({
 	baseURL:
 		'http://localhost:3001',
 	withCredentials: true,
-})
+
+},)
 
 // Axios instance for authenticated usersz
 const PrivateAxios = axios.create({

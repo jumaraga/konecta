@@ -4,6 +4,7 @@ export const coursesRoutes = {
     addCourse: `/courses/`,
     removeCourse: (id: string) => (`/courses/${id}`)
 }
-// export const auth={
-//     login:
-// }
+export const authEndpoints={
+    login:'',
+    signIn:'/auth'
+}
