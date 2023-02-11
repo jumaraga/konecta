@@ -5,12 +5,14 @@ import { INewUserInfo } from "../user/interfaces/user.interface";
 import { UserService } from "src/user/user.service";
 import { AuthGuard } from "@nestjs/passport/dist/auth.guard";
 import { User } from "src/user/user.model";
+import { ConfigService } from "@nestjs/config";
 @Controller('auth')
 export class AuthController {
 
     constructor(
         private readonly AuthService: AuthService,
         private readonly userService: UserService,
+        private readonly configService: ConfigService,
     ) { }
     @Post('/')
     async signUp(
@@ -19,10 +21,13 @@ export class AuthController {
     ) {
         try {
             // verify if username already exist
-            const validationMessage = await this.userService.validadUSernameAndEmail(userInfo.username, userInfo.email)
-            if (validationMessage) return res.send({ message: validationMessage, data: null })
-            const data = await this.AuthService.createUser(userInfo);
-            return res.send({ message: '', data })
+            const validationMessage = await this.userService.validadUSernameAndEmail(userInfo.username, userInfo.email);
+            if (validationMessage) return res.send({ message: validationMessage, data: null });
+            const user = await this.AuthService.createUser(userInfo);
+            // create token
+            const {accessToken} =await this.AuthService.generateJWT(user as User);
+            
+            return res.send({ message: '', data:{user, accessToken} })
         } catch (e) {
             const message = 'Something wrong happened. Please contact help@konecta.com for assistance.';
             res.send({ message, e })

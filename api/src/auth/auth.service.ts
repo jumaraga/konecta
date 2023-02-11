@@ -17,9 +17,6 @@ export class AuthService {
     private readonly authRepo: Repository<Auth>,
     private readonly jwtService: JwtService) { }
   async createUser(userInfo: INewUserInfo): Promise<User | string> {
-
-
-
     //validate length of password
     const { password } = userInfo;
     if (password.length < 8) return `password should be at least 8 characters long`
@@ -57,7 +54,7 @@ export class AuthService {
   async generateJWT(user: User){
     const paylod:PayloadToken ={admin:user.isAdmin, sub:+user.id}
     return {
-      acces_token:await this.jwtService.signAsync(paylod),
+      accessToken:await this.jwtService.signAsync(paylod),
       user
     }
   }

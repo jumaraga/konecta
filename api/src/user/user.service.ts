@@ -18,7 +18,7 @@ export class UserService {
     }
 
     async saveNewUser(userInfo: Omit<User, 'id'>): Promise<User> {
-        return await this.UserRepository.save(userInfo)
+        return await this.UserRepository.save({...userInfo, isAdmin:false})
     }
     async findUserByEmail(email:string){
         return (await this.UserRepository.query(/* sql */`Select us.*, au.hash from users us join auth au on us.id = au.user_id Where email='${email}' `))[0]
