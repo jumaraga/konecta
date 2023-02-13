@@ -5,6 +5,6 @@ export const coursesRoutes = {
     removeCourse: (id: string) => (`/courses/${id}`)
 }
 export const authEndpoints={
-    login:'',
+    login:'/auth/login',
     signIn:'/auth'
 }

@@ -5,31 +5,22 @@ import { Button } from "./Button";
 import { SignInInput } from "./FormInput";
 import Cookie from 'js-cookie'
 import { redirect, useNavigate } from "react-router-dom";
+import { getFormFields } from "@/utils/getDataForm";
 
 export const SignInForm = () => {
     const navegate = useNavigate()
     const ref = useRef<HTMLFormElement>(null)
-    function register(e: React.MouseEvent) {
-        e.preventDefault;
-    };
     function login() {
         navegate('/login')
     }
     async function submitForm(e: React.FormEvent) {
         e.preventDefault();
-        const formData = new FormData(ref.current as HTMLFormElement);
-        const data = {
-            firstname: formData.get('firstname'),
-            lastname: formData.get('lastname'),
-            username: formData.get('username'),
-            email: formData.get('email'),
-            phoneNumber: formData.get('phoneNumber'),
-            password: formData.get('password'),
-        };
+        const data = getFormFields(ref.current as HTMLFormElement, 'lastname', 'firstname', 'username', 'email', 'phoneNumber', 'password');
+        console.log(data)
         const response = await ClientAxios.post(authEndpoints.signIn, data, { withCredentials: true });
         if (response.data.data.accessToken) {
             Cookie.set('Authentication', response.data.data.accessToken, { expires: 2628000 });
-            navegate('/')
+            navegate('/');
         }
     }
     return (

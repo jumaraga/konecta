@@ -17,7 +17,8 @@ export class AuthController {
     @Post('/')
     async signUp(
         @Body() userInfo: INewUserInfo,
-        @Res() res: Response
+        @Res() res: Response,
+        @Req() req:Request
     ) {
         try {
             // verify if username already exist
