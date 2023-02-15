@@ -14,11 +14,11 @@ export class AuthController {
         private readonly userService: UserService,
         private readonly configService: ConfigService,
     ) { }
-    @Post('/')
+    @Post('/signUp')
     async signUp(
         @Body() userInfo: INewUserInfo,
         @Res() res: Response,
-        @Req() req:Request
+        @Req() req: Request
     ) {
         try {
             // verify if username already exist
@@ -26,9 +26,9 @@ export class AuthController {
             if (validationMessage) return res.send({ message: validationMessage, data: null });
             const user = await this.AuthService.createUser(userInfo);
             // create token
-            const {accessToken} =await this.AuthService.generateJWT(user as User);
-            
-            return res.send({ message: '', data:{user, accessToken} })
+            const { accessToken } = await this.AuthService.generateJWT(user as User);
+
+            return res.send({ message: '', data: { user, accessToken } })
         } catch (e) {
             const message = 'Something wrong happened. Please contact help@konecta.com for assistance.';
             res.send({ message, e })
@@ -41,6 +41,13 @@ export class AuthController {
         const user = req.user as User;
         const token = await this.AuthService.generateJWT(user)
         return res.send(token)
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/')
+    async validateUser(@Req() req: Request, @Body() email: string, @Body() password: string, @Res() res: Response) {
+        const user = req.user as User;
+        return res.send(req.user)
     }
 
     @Post('signout')

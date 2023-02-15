@@ -1,4 +1,4 @@
 export interface PayloadToken{
-    admin:boolean;
+    isAdmin:boolean;
     sub:number
 }

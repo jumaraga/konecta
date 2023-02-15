@@ -6,5 +6,6 @@ export const coursesRoutes = {
 }
 export const authEndpoints={
     login:'/auth/login',
-    signIn:'/auth'
+    signIn:'/auth/signUp',
+    getUser:'/auth/'
 }

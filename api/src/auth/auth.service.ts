@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   async generateJWT(user: User){
-    const paylod:PayloadToken ={admin:user.isAdmin, sub:+user.id}
+    const paylod:PayloadToken ={isAdmin:user.isAdmin, sub:+user.id}
     return {
       accessToken:await this.jwtService.signAsync(paylod),
       user

@@ -5,7 +5,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 export const Header: FunctionComponent = () => {
     const navegate = useNavigate();
-    const { isAdmin } = useContext(UserContext)
+    const { store:{isAdmin} } = useContext(UserContext)
+    console.log(isAdmin)
     function logIn() {
         navegate('/login')
     };
@@ -13,7 +14,7 @@ export const Header: FunctionComponent = () => {
         navegate('/signIn')
     };
     function adminPanel() {
-        navegate(ADMIN_PANEL)
+        window.location.assign('/admin/panel')
     };
     return (
         <header className="grid p-2">

@@ -1,13 +1,17 @@
 import { authEndpoints } from "@/config/routes/endpoints";
 import { getFormFields } from "@/utils/getDataForm";
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import { SignInInput } from "./FormInput";
 import Cookies from "js-cookie";
+import ClientAxios, { PrivateAxios } from "@/config/axios";
+import { UserContext, UserStore } from "@/context";
+import { UserActions } from "@/context/user.action";
 
 export const LoginForm = () => {
+    const {store,dispatch} = useContext(UserContext)
     const navegate = useNavigate();
     const ref = useRef<HTMLFormElement>(null);
     const register = () => {
@@ -16,9 +20,11 @@ export const LoginForm = () => {
     const submitForm = async (e: React.FormEvent) => {
         e.preventDefault();
         const data = getFormFields(ref.current as HTMLFormElement, 'email', 'password');
-        const response = await axios.post(authEndpoints.login, data);
-        if (response.data.data.accessToken) {
-            Cookies.set('Authentication', response.data.data.accessToken, { expires: 2628000 });
+        const response = (await (await ClientAxios.post(authEndpoints.login, data)).data);
+        if (response.accessToken) {
+            Cookies.set('Authentication', response.accessToken, { expires: 2628000 });
+            PrivateAxios.defaults.headers.common[`Authorization`] = `Bearer ${response.accessToken}`
+            dispatch({type:UserActions.SET_USER,payload:response.user as UserStore})
             navegate('/')
         }
     }

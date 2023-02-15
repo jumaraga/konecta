@@ -4,11 +4,10 @@ import axios, {
 } from 'axios'
 // import store from '@/redux/store/store'
 import { setStorage } from '@/utils/localStorage'
+import Cookies from 'js-cookie'
 // import { RefreshTokenResponse } from '@/redux/users/types/axiosResponses'
-import { getStorageItem } from '@/utils/localStorage'
+const accessToken = Cookies.get('Authentication');
 
-
-const accessToken = getStorageItem('access')
 
 
 // Axios instance for candidates use and user login
@@ -39,25 +38,25 @@ PrivateAxios.interceptors.request.use(
 	(error: any) => Promise.reject(error),
 )
 
-PrivateAxios.interceptors.response.use(
-	(response: AxiosResponse) => response,
-	async error => {
-		const prevRequest = error?.config
-		if (
-			error?.response?.status === 401 &&
-			!prevRequest?.sent
-		) {
-			prevRequest.sent = true
-			// const accessToken
-			prevRequest.headers[
-				'Authorization'
-			] = `Bearer ${accessToken}`
-			return PrivateAxios(prevRequest)
-		}
+// PrivateAxios.interceptors.response.use(
+// 	(response: AxiosResponse) => response,
+// 	async error => {
+// 		const prevRequest = error?.config
+// 		if (
+// 			error?.response?.status === 401 &&
+// 			!prevRequest?.sent
+// 		) {
+// 			prevRequest.sent = true
+// 			// const accessToken
+// 			prevRequest.headers[
+// 				'Authorization'
+// 			] = `Bearer ${accessToken}`
+// 			return PrivateAxios(prevRequest)
+// 		}
 
-		return Promise.reject(error)
-	},
-)
+// 		return Promise.reject(error)
+// 	},
+// )
 
 export default ClientAxios
 export { PrivateAxios }

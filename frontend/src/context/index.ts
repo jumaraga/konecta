@@ -1,8 +1,18 @@
 import { createContext, useEffect } from "react";
+import { UserActionTypes } from "./user.action";
 
-export const UserContext = createContext({}as typeof initialState);
+export const UserContext = createContext({} as Context);
 
-export const initialState = {
+export const InitialState = {
     username: '',
     isAdmin: false,
 }
+interface Context {
+    store: UserStore,
+    dispatch: React.Dispatch<UserActionTypes>
+}
+export interface UserStore {
+    username: string;
+    isAdmin: boolean
+}
+
