@@ -5,7 +5,7 @@ export const UserContext = createContext({} as Context);
 
 export const InitialState = {
     username: '',
-    isAdmin: false,
+    isAdmin: undefined,
 }
 interface Context {
     store: UserStore,
@@ -13,6 +13,6 @@ interface Context {
 }
 export interface UserStore {
     username: string;
-    isAdmin: boolean
+    isAdmin: boolean|undefined
 }
 

@@ -8,7 +8,7 @@ export default class AdminGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const user = request.user as PayloadToken;
-        if(user.admin) return true
+        if(user.isAdmin) return true
         return false
     }
 

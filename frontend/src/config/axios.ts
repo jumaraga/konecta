@@ -38,25 +38,5 @@ PrivateAxios.interceptors.request.use(
 	(error: any) => Promise.reject(error),
 )
 
-// PrivateAxios.interceptors.response.use(
-// 	(response: AxiosResponse) => response,
-// 	async error => {
-// 		const prevRequest = error?.config
-// 		if (
-// 			error?.response?.status === 401 &&
-// 			!prevRequest?.sent
-// 		) {
-// 			prevRequest.sent = true
-// 			// const accessToken
-// 			prevRequest.headers[
-// 				'Authorization'
-// 			] = `Bearer ${accessToken}`
-// 			return PrivateAxios(prevRequest)
-// 		}
-
-// 		return Promise.reject(error)
-// 	},
-// )
-
 export default ClientAxios
 export { PrivateAxios }

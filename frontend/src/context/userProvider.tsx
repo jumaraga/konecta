@@ -9,7 +9,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(userReducer, InitialState);
     const store = { store: state, dispatch }
     async function getUserData() {
-        console.log(store)
         const data = (await PrivateAxios.get(authEndpoints.getUser)).data;
         dispatch({ type: UserActions.SET_USER, payload: data })
     };
